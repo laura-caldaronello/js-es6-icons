@@ -116,14 +116,18 @@ $(document).ready(function() {
     // Coloriamo le icone per tipo
     // 1. isoliamo i tipi
     const iconsTypes = getTypes(icons);
-    // 2. generiamo tanti colori quanti tipi abbiamo: di base saranno 3, se vengono aggiunti tipi verranno aggiunti altrettanti colori casuali, anche se mi rendo conto che questo ha dei limiti perchè ogni volta che ricarico la pagina un eventuale quarto tipo avrà sempre un colore diverso, mentre i colori dovrebbero generarsi con un criterio più preciso che magari elaborerò più tardi, dunque il problema si ricondurrà a trovare un ordinamento arbitrario ma fisso dei colori di tipo rgb
+    // 2. generiamo tanti colori quanti tipi abbiamo: vedi appunti sulla relativa function
     const typesColors = generateColors(iconsTypes);
     // 3. generiamo un array di icone colorate
     const coloredIcons = associateColors(icons,iconsTypes,typesColors);
     print(coloredIcons,container);
+
+    // Milestone 3
+    // Creiamo un select con i tipi di icone e usiamola per filtrare le icone
     
 });
 
+// Funzione generale: se trova un color lo usa, altrimenti stampa in nero
 function print(array,where) {
     where.html('');
     array.forEach((item) => {
@@ -143,6 +147,7 @@ function getTypes(array) {
     return types;
 };
 
+// I colori di base saranno 3, se vengono aggiunti tipi verranno aggiunti altrettanti colori casuali, anche se mi rendo conto che questo ha dei limiti perchè ogni volta che ricarico la pagina un eventuale quarto tipo avrà sempre un colore diverso, mentre i colori dovrebbero generarsi con un criterio più preciso che magari elaborerò più tardi, dunque il problema si ricondurrà a trovare un ordinamento arbitrario ma fisso dei colori di tipo rgb
 function generateColors(featuresArray) {
     const colors = ['rgb(255,0,0)','rgb(0,255,0)','rgb(0,0,255)'];
     while (colors.length < featuresArray.length) {
@@ -169,11 +174,11 @@ function randomColorRGB() {
     return colorString;
 };
 
+// Creo una copia dell'array di oggetti originale a cui aggiungo il color
 function associateColors(array,featuresArray,generatedColors) {
     const newArray = [];
     array.forEach((item) => {
-        const {name,prefix,type,family} = item;
-        const icon = {name: name,prefix: prefix,type: type,family: family};
+        const icon = {...item};
         icon.color = generatedColors[featuresArray.indexOf(icon.type)];
         newArray.push(icon);
     });
