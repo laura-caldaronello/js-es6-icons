@@ -148,7 +148,12 @@ function print(array,where) {
     where.html('');
     array.forEach((item) => {
         let {name,prefix,family,color} = item;
-        where.append(`<div><i class="${family} ${prefix}${name}" style="color: ${color}"></i> ${name.toUpperCase()}</div>`);
+        where.append(`  <div>
+                            <i class="${family} ${prefix}${name}" style="color: ${color}"></i>
+                            <div class="text">
+                                ${name.toUpperCase()}
+                            </div>
+                        </div>`);
     });
 };
 
