@@ -123,7 +123,23 @@ $(document).ready(function() {
     print(coloredIcons,container);
 
     // Milestone 3
-    // Creiamo un select con i tipi di icone e usiamola per filtrare le icone
+    // Creiamo un select con i tipi di icone e usiamolo per filtrare le icone
+    const selectType = $('select#type');
+
+    // Creo le options, di cui la prima deve essere all
+    selectType.append(`<option value="all">all</option>`);
+    iconsTypes.forEach((type) => {
+        selectType.append(`<option value="${type}">${type}</option>`);
+    });
+
+    // Creo gli eventi
+    selectType.change(function() {
+        var filtered = coloredIcons.filter((item) => item.type == $(this).val());
+        if ($(this).val() == 'all') {
+            filtered = coloredIcons;
+        }
+        print(filtered,container);
+    });
     
 });
 
